@@ -1,14 +1,14 @@
 /**
- * This class is part of the "Zorld of Wuul" application. 
- * "Zorld of Wuul" is a very simple, text based adventure game.  
  * 
  * This printer makes adding text to the output HTMLElement more convenient
  * to the developer. It acts much like the System.out object in java
  * 
- * @author  Bugslayer
+ * @author  Huib0029
  * @version 2017.03.30
  */
+
 class Printer {
+
     output : HTMLElement;
 
     /**
@@ -37,6 +37,10 @@ class Printer {
     println(text="") : void {
          this.print(text + "<br/>");
          this.output.scrollTop = this.output.scrollHeight;       
+    }
+    //Print logo to terminal
+    printLogo(text="<object data='assets/logo.txt'</object>") : void {
+         this.output.innerHTML += text;  
     }
 
 }

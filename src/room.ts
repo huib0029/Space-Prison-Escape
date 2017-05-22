@@ -1,15 +1,14 @@
 /**
- * Class Room - a room in an adventure game.
+ * Class Room - a room in an Sci-Fi game.
  *
- * This class is part of the "Zorld of Wuul" application. 
- * "Zorld of Wuul" is a very simple, text based adventure game.  
+ * This class is part of the "Space Prison Escape" application.   
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  The exits are labelled north, 
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Michael Kölling, David J. Barnes and Bugslayer
+ * @author  Huib0029
  * @version 2017.03.30
  */
 class Room {

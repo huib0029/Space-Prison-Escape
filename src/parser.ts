@@ -1,6 +1,4 @@
 /**
- * This class is part of the "Zorld of Wuul" application. 
- * "Zorld of Wuul" is a very simple, text based adventure game.  
  * 
  * This parser reads user input and tries to interpret it as an "Adventure"
  * command. Every time it is called it reads a line from the terminal and
@@ -9,7 +7,7 @@
  * The parser has a set of known command words. It checks user input against
  * the known commands, and invokes a relevant method on the Game object.
  * 
- * @author  Michael Kölling, David J. Barnes and Bugslayer
+ * @author  Huib0029
  * @version 2017.03.30
  */
 class Parser {
