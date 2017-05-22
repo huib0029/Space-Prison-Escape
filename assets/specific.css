@@ -1,0 +1,13 @@
+console {
+    font-family: Consolas, monaco, monospace;
+    background: #000;
+    color: #FFFFFF;
+    height: auto;
+    overflow-y:scroll;
+}
+body {
+    background: #000000 url("sparlin2.jpg") no-repeat fixed center;
+}
+jumbotron {
+              background-image: url(bgnd-jumbo.png);
+          }
