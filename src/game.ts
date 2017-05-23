@@ -59,8 +59,8 @@ class Game {
     printWelcome() : void {
         this.out.println();
         this.out.printLogo();
-        this.out.println("Welcome to game Space Prison Escape game!");
-        this.out.println("Space Prison Escape is a new, incredibly fun Sci-Fi/Prison Break game.");
+        this.out.println("Welcome to the Space Prison Escape game!");
+        this.out.println("Space Prison Escape is a new, incredibly fun Sci-Fi/Prison Break game based on the populair 'Zorld of Wuul'.");
         this.out.println("Type 'help' if you need help.");
         this.out.println("Type 'commands' to see all the useful commands.");
         this.out.println();
