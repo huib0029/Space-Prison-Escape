@@ -13,7 +13,6 @@
 class Parser {
     input : HTMLInputElement;
     game : Game;
-    look : Look;
 
     /**
      * Creates the parser object.
