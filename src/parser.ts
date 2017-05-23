@@ -13,6 +13,7 @@
 class Parser {
     input : HTMLInputElement;
     game : Game;
+    look : Look;
 
     /**
      * Creates the parser object.
@@ -59,6 +60,12 @@ class Parser {
                 break;
             case "look" :
                 wantToQuit = this.game.printLook(params);
+                break;
+            case "commands" :
+                wantToQuit = this.game.printCommands(params);
+                break;
+            case "map" :
+                wantToQuit = this.game.printMap(params);
                 break;
             default :
                 // print an error when command is not known

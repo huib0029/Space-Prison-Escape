@@ -33,7 +33,7 @@ class Game {
      */
     createRooms() : void {
         // create the rooms
-        let outside = new Room("outside the main entrance of the university");
+        let cell1 = new Room("in cell-1");
         let theater = new Room("in a lecture theater");
         let pub = new Room("in the campus pub");
         let lab = new Room("in a computing lab");
@@ -42,15 +42,15 @@ class Game {
 
         // initialise room exits
         // Noord, Oost, Zuid, West
-        outside.setExits(null, pub, lab, theater);
-        theater.setExits(null, outside, dwaardoffice, null);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, dwaardoffice);
+        cell1.setExits(null, pub, lab, theater);
+        theater.setExits(null, cell1, dwaardoffice, null);
+        pub.setExits(null, cell1, null, null);
+        lab.setExits(cell1, office, null, dwaardoffice);
         office.setExits(null, null, null, lab);
         dwaardoffice.setExits(theater, null, null, lab);
 
-        // spawn player outside
-        this.currentRoom = outside;
+        // spawn player inside cell1
+        this.currentRoom = cell1;
     }
 
     /**
@@ -63,6 +63,8 @@ class Game {
         this.out.println("Space Prison Escape is a new, incredibly fun Sci-Fi/Prison Break game based on the populair 'Zorld of Wuul'.");
         this.out.println("Type 'help' if you need help.");
         this.out.println("Type 'commands' to see all the useful commands.");
+        this.out.println("Type 'map' to see your current position.");
+        this.out.println("Type 'intro' to view the intro video.");
         this.out.println();
         this.out.println("You are " + this.currentRoom.description);
         this.out.print("Exits: ");
@@ -100,10 +102,10 @@ class Game {
         this.out.println("I don't know what you mean...");
         this.out.println();
         this.out.println("Your command words are:");
-        this.out.println("   go quit help");
+        this.out.println("   go quit help commands");
         return false;
     }
-    printLook(params : string[]) : boolean {
+   printLook(params : string[]) : boolean {
         this.out.println("You are " + this.currentRoom.description);
         this.out.print("Exits: ");
             if(this.currentRoom.northExit != null) {
@@ -135,14 +137,44 @@ class Game {
             this.out.println("Help what?");
             return false;
         }
-        this.out.println("You are lost. You are alone. You wander");
-        this.out.println("around at the university.");
+        this.out.println("You are a maffia boss in a prison on the moon");
+        this.out.println("Hmmm... there must be a way to escape..");
         this.out.println();
-        this.out.println("Your command words are:");
-        this.out.println("   go quit help");
+        this.out.println("Try to type something, like 'go east' for example");
+        this.out.println("You can also quit.. but please play this game");
+        this.out.println("");
+        return false;
+    }
+    
+    // This prints out all the useful commands
+    
+    printCommands(params : string[]) : boolean {
+        if(params.length > 0) {
+            this.out.println("Just type 'commands' and press 'enter'");
+            return false;
+        }
+        this.out.println("Here are some useful commands:");
+        this.out.println("----------------------------------------");
+        this.out.println("-go (go south, go east, go west etc.)");
+        this.out.println("-help (if you need help)");
+        this.out.println("-quit (to quit the game, please dont do that.)");
+        this.out.println("-look (to view what you see.)");
+        this.out.println("-map (to see where you are.)");
+        this.out.println("");
         return false;
     }
 
+    // This shows the map with the current position
+    printMap(params : string[]) : boolean {
+        if(params.length > 0) {
+            this.out.println("Just type 'map' and press 'enter'");
+            return false;
+        }
+        this.out.println("You are now here:");
+        this.out.println("<object class='map' data='assets/map/" + this.currentRoom.description + ".gif'</object>" );
+        this.out.println("");
+        return false;
+    }
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
