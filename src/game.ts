@@ -171,7 +171,7 @@ class Game {
             return false;
         }
         this.out.println("You are now here:");
-        this.out.println("<object class='map' data='assets/map/" + this.currentRoom.description + ".gif'</object>" );
+        this.out.println("<img class='map' src='assets/map/" + this.currentRoom.description + ".gif'" );
         this.out.println("");
         return false;
     }
