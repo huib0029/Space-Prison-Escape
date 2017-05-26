@@ -1,2 +1,2 @@
 link>http://gifmaker.me/
-animationspeed> 500 milliseconds
+animationspeed> 400 milliseconds

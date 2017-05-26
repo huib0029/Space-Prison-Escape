@@ -10,7 +10,8 @@
  * @version 2017.05.22
  */
 class Game {
-    parser : Parser;
+    scell: any;
+    parser: Parser;
     out : Printer;
 
     currentRoom : Room;
@@ -27,32 +28,6 @@ class Game {
         this.createRooms();
         this.printWelcome();
     }
-
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    createRooms() : void {
-        // create the rooms
-        let cell1 = new Room("in cell-1");
-        let theater = new Room("in a lecture theater");
-        let pub = new Room("in the campus pub");
-        let lab = new Room("in a computing lab");
-        let office = new Room("in the computing admin office");
-        let dwaardoffice = new Room("in Daan's office")
-
-        // initialise room exits
-        // Noord, Oost, Zuid, West
-        cell1.setExits(null, pub, lab, theater);
-        theater.setExits(null, cell1, dwaardoffice, null);
-        pub.setExits(null, cell1, null, null);
-        lab.setExits(cell1, office, null, dwaardoffice);
-        office.setExits(null, null, null, lab);
-        dwaardoffice.setExits(theater, null, null, lab);
-
-        // spawn player inside cell1
-        this.currentRoom = cell1;
-    }
-
     /**
      * Print out the opening message for the player.
      */
@@ -64,9 +39,10 @@ class Game {
         this.out.println("Type 'help' if you need help.");
         this.out.println("Type 'commands' to see all the useful commands.");
         this.out.println("Type 'map' to see your current position.");
-        this.out.println("Type 'intro' to view the intro video.");
+        this.out.println("Type 'look' to view what you see.");
         this.out.println();
         this.out.println("You are " + this.currentRoom.description);
+        this.out.println(this.currentRoom.lookDescription);
         this.out.print("Exits: ");
         if(this.currentRoom.northExit != null) {
             this.out.print("north ");
@@ -106,6 +82,7 @@ class Game {
         return false;
     }
    printLook(params : string[]) : boolean {
+        this.out.println(this.currentRoom.lookDescription);
         this.out.println("You are " + this.currentRoom.description);
         this.out.print("Exits: ");
             if(this.currentRoom.northExit != null) {
@@ -171,7 +148,7 @@ class Game {
             return false;
         }
         this.out.println("You are now here:");
-        this.out.println("<img class='map' src='assets/map/" + this.currentRoom.description + ".gif'" );
+        this.out.println("<img class='map' src='assets/map/" + this.currentRoom.mapDescription + ".gif'" );
         this.out.println("");
         return false;
     }
@@ -214,6 +191,7 @@ class Game {
         else {
             this.currentRoom = nextRoom;
             this.out.println("You are " + this.currentRoom.description);
+            this.out.println(this.currentRoom.actionDescription);
             this.out.print("Exits: ");
             if(this.currentRoom.northExit != null) {
                 this.out.print("north ");
@@ -247,5 +225,76 @@ class Game {
         else {
             return true;  // signal that we want to quit
         }
+    }
+        /**
+        * Create all the rooms and link their exits together.
+        * Create a room described "description". Initially, it has
+        * no exits. "description" is something like "a kitchen" or
+        * "an open court yard".
+        * Look description like a story about cell-1 where you have to find an item "It looks small" or
+        * "Where's the key?", you can use the look commands to see the long description.
+        * Map description is for the .gif map files.
+         * 
+     */
+     createRooms() : void {
+        // create the rooms, example:  = new Room("map description", "description", "look description", "action description"); 
+        let cell1 = new Room("cell1", "in cell-1", 
+        "It is a small cell with a toilet and a bed, try to get out of the prison cell, all the doors are open because its lunch time",
+        "");
+        
+        let cellhall1 = new Room("cellhall1", "in the large cell hall", 
+        "You are between cell-1 and cell-2, you see guards looking at you and everybody is already in the canteen",
+        "The doors closes behind you...");
+        
+        let cellhall2 = new Room("cellhall2", "still in the large cell hall", 
+        "You have walked to the end of the large cell hall, you see guards looking at you and everybody is already in the canteen",
+        "");
+        
+        let cellhall3 = new Room("cellhall3", "in the smaller cell hall", 
+        "You see guards looking at you", "");
+       
+        let hall1 = new Room("hall1", "in the public hall", 
+        "You see a hall where you can go to the canteen, gym and the library.", "");
+        
+        let hall2 = new Room("hall2", hall1.description, 
+        hall1.lookDescription, "North of you is the canteen, south of you is the gym.");
+
+        let hall3 = new Room("hall3", hall1.description, 
+        hall1.lookDescription, "North of you is the library");
+        
+        let canteen = new Room("canteen", "in the canteen", 
+        "You see lots of people eating", "North of you is the kitchen, get some food");
+
+        let kitchen = new Room("kitchen", "in front of the kitchen", 
+        "You see some food", "you took some food...");
+
+        let library = new Room("library", "you are in the library", 
+        "", "");
+
+        let gym = new Room("gym", "you are in the gym", 
+        "", "");
+
+        let shower = new Room("shower", "you are in the showers of the gym", 
+        "", "");
+        
+
+        // initialise room exits
+        // Noord, Oost, Zuid, West
+        cell1.setExits(null, cellhall1, null, null);
+        cellhall1.setExits(null, null, cellhall2, null);
+        cellhall2.setExits(null, null, cellhall3, null);
+        cellhall3.setExits(null, hall1, null, null);
+        hall1.setExits(null, hall2, null, null);
+        hall2.setExits(canteen, hall3, gym, hall1);
+        hall3.setExits(library, null, null, hall2);
+        canteen.setExits(kitchen, null, hall2, null);
+        kitchen.setExits(null, null, canteen, null);
+        library.setExits(null, null, hall3, null);
+        gym.setExits(hall2, shower, null, null);
+        shower.setExits(null, null, null, gym);
+
+        
+        // spawn player inside cell1
+        this.currentRoom = cell1;
     }
 }

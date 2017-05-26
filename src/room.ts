@@ -12,7 +12,10 @@
  * @version 2017.03.30
  */
 class Room {
+    mapDescription : string;
     description : string;
+    lookDescription : string;
+    actionDescription : string;
 
     northExit : Room;
     southExit : Room;
@@ -20,13 +23,15 @@ class Room {
     westExit : Room;
 
     /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
      * @param description The room's description.
+     * @param lookDescription The room's look description (use look command)
+     * @param mapDescription the room's map description (use map command to get <map description>.gif file)
      */
-    constructor(description : string) {
+    constructor(mapDescription : string, description : string, lookDescription : string, actionDescription : string) {
+        this.mapDescription = mapDescription;
         this.description = description;
+        this.lookDescription = lookDescription;
+        this.actionDescription = actionDescription;
     }
 
     /**
