@@ -12,6 +12,9 @@
 class Game {
     parser: Parser;
     out : Printer;
+    
+    currentInventory : Inventory;
+    items: Inventory[] = [];
 
     currentRoom : Room;
 
@@ -26,6 +29,7 @@ class Game {
         this.isOn = true;
         this.createRooms();
         this.printWelcome();
+        this.createInventory();
     }
     /**
      * Print out the opening message for the player.
@@ -164,6 +168,36 @@ class Game {
         this.out.println("");
         return false;
     }
+    // Shows the player its current inventory
+    printInventory(params : string[]) : boolean {
+        if(params.length > 0) {
+            this.out.println("Just type 'inventory' and press 'enter'");
+            return false;
+        }
+        else if(this.currentInventory != null) {
+        this.out.println("Your current inventory items are: ");
+        this.out.println("-item:-------------------quantity:");
+        this.currentInventory.forEach((inventorys:string) => {
+            this.out.print(this.currentInventory.description + " " + this.currentInventory);
+        });
+        this.out.println();
+        } else {
+            this.out.println("There are no items in your inventory.")
+        }
+        return false;
+    }
+    //inventory test
+    createInventory() : void {
+        let test = new Inventory("test", 4);
+        this.items.push(new Inventory("test", 4));
+    }
+    
+    testInventory(params : string[]) : boolean {
+        this.out.println("Your current inventory items are: ");
+        this.out.print(this.currentInventory.description);
+        return false;
+    }
+
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
@@ -251,6 +285,9 @@ class Game {
      */
      createRooms() : void {
         // create the rooms, example:  = new Room("map description", "description", "look description", "action description"); 
+
+        let test2 = new Inventory("test", 4); 
+
         let cell1 = new Room("cell1", "in cell-1", 
         "It is a small cell with a toilet and a bed, try to get out of the prison cell, all the doors are open because its lunch time",
         "");
@@ -342,7 +379,7 @@ class Game {
         "You see a docter", "");
 
         let armory = new Room("armory", "in the armory room", 
-        "You see lots of useful weapons", "");
+        "You see lots of useful weapons", "You find a underground tunnel in the east of you, go east if u want to use this tunnel");
 
         let exerciseyard = new Room("exerciseyard", "in the exerciseyard", 
         "You can sport here", "");
@@ -400,7 +437,7 @@ class Game {
         waste.setExits(guards1, null, null, null);
         workshop.setExits(null, hall7, null, null);
         medic.setExits(null, null, null, hall8);
-        armory.setExits(null, null, null, hall9);
+        armory.setExits(null, hall11, null, hall9);
         exerciseyard.setExits(null, hall6, null, null);
         isocells.setExits(null, null, hall10, null);
         water.setExits(hall11, null, null, null);
