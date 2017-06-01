@@ -177,9 +177,9 @@ class Game {
         else if(this.currentInventory != null) {
         this.out.println("Your current inventory items are: ");
         this.out.println("-item:-------------------quantity:");
-        this.currentInventory.forEach((inventorys:string) => {
-            this.out.print(this.currentInventory.description + " " + this.currentInventory);
-        });
+        // this.currentInventory.forEach((inventorys:string) => {
+        //     this.out.print(this.currentInventory.description + " " + this.currentInventory);
+        // });
         this.out.println();
         } else {
             this.out.println("There are no items in your inventory.")
@@ -188,7 +188,8 @@ class Game {
     }
     //inventory test
     createInventory() : void {
-        let test = new Inventory("test", 4);
+        this.currentInventory = new Inventory("test", 4);
+        console.log(this.currentInventory.description);
         this.items.push(new Inventory("test", 4));
     }
     
