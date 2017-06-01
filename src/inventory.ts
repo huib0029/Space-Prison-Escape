@@ -11,11 +11,24 @@
 class Inventory {
   description : string;
   quantity : number;
+  forEach : any;
+  items : Array<Item> = [];
   
   constructor(description : string, quantity : number) {
     this.description = description;
     this.quantity = quantity;
   } 
+
+//  public getItemList() : string
+//  {
+ //   let result = '';
+ //   for (var item in this.items)
+ //   {
+ //     result = result + item.name; //`tekst $(result)`
+ //   }
+//    return result;
+//  }
+
 }
 
 
