@@ -69,9 +69,6 @@ class Parser {
             case "inventory" :
                 wantToQuit = this.game.printInventory(params);
                 break;
-            case "testinventory" :
-                wantToQuit = this.game.testInventory(params);
-                break;
             default :
                 // print an error when command is not known
                 wantToQuit = this.game.printError(params);

@@ -13,9 +13,6 @@ class Game {
     parser: Parser;
     out : Printer;
     
-    // currentInventory : Inventory;
-    // items: Inventory[] = [];
-
     inventory: Item[] = [];
 
     currentRoom : Room;
@@ -176,42 +173,20 @@ class Game {
             this.out.println("Just type 'inventory' and press 'enter'");
             return false;
         }
-        // else if(this.currentInventory != null) {
-        // this.out.println("Your current inventory items are: ");
-        // this.out.println("-item:-------------------quantity:");
-        // //this.out.println(this.currentInventory.getItemList());
-        // this.currentInventory.forEach(this.currentInventory.description => {
-        //     this.out.print(this.currentInventory.description + " " + this.currentInventory.quantity);
-        // });
-
-        // this.currentInventory.forEach(item => {
-            
-        // });
-
-
-
-        // this.out.println();
-        // } else {
-        //     this.out.println("There are no items in your inventory.")
-        // }
+        else if(this.inventory.length > 0) {
+        this.out.println("Your current inventory items are: ");
+        this.inventory.forEach(item => {
+            this.out.print("-" + item.description + " ");
+        });
+        this.out.println();
+        } else {
+        this.out.println("There are no items in your inventory.")
+        }
         return false;
     }
     //inventory test
     createInventory() : void {
-        // this.currentInventory = new Inventory("", 0);
-        // console.log(this.currentInventory.description);
-        // this.items.push(new Inventory("test", 4));
-
-        this.inventory.push(new Item("key"));
-    }
-    
-    testInventory(params : string[]) : boolean {
-        this.out.println("Your current inventory items are: ");
-        //this.out.print(this.currentInventory.description);
-        this.inventory.forEach(item => {
-            this.out.print(item.description + " ");
-        });
-        return false;
+        this.inventory.push(new Item("Money: Unlimited"));
     }
 
     /** 
@@ -301,8 +276,6 @@ class Game {
      */
      createRooms() : void {
         // create the rooms, example:  = new Room("map description", "description", "look description", "action description"); 
-
-        let test2 = new Inventory("test", 4); 
 
         let cell1 = new Room("cell1", "in cell-1", 
         "It is a small cell with a toilet and a bed, try to get out of the prison cell, all the doors are open because its lunch time",
