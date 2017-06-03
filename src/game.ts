@@ -12,10 +12,9 @@
 class Game {
     parser: Parser;
     out : Printer;
-    
     inventory: Item[] = [];
-
     currentRoom : Room;
+    basics : Basics;
 
     isOn : boolean;
 
@@ -26,245 +25,18 @@ class Game {
         this.parser = new Parser(this, input);
         this.out = new Printer(output);
         this.isOn = true;
+        this.basics = new Basics(this);
         this.createRooms();
-        this.printWelcome();
+        this.basics.printWelcome();
         this.createInventory();
     }
-    /**
-     * Print out the opening message for the player.
-     */
-    printWelcome() : void {
-        this.out.println();
-        this.out.printLogo();
-        this.out.println("Welcome to the Space Prison Escape game!");
-        this.out.println("Space Prison Escape is a new, incredibly fun Sci-Fi/Prison Break game based on the populair 'Zorld of Wuul'.");
-        this.out.println("Type 'help' if you need help.");
-        this.out.println("Type 'commands' to see all the useful commands.");
-        this.out.println("Type 'map' to see your current position.");
-        this.out.println("Type 'look' to view what you see.");
-        this.out.println();
-        this.out.println("You are " + this.currentRoom.description);
-        this.out.println(this.currentRoom.lookDescription);
-        this.out.print("Exits: ");
-        if(this.currentRoom.northExit != null) {
-            this.out.print("north ");
-        }
-        if(this.currentRoom.eastExit != null) {
-            this.out.print("east ");
-        }
-        if(this.currentRoom.southExit != null) {
-            this.out.print("south ");
-        }
-        if(this.currentRoom.westExit != null) {
-            this.out.print("west ");
-        }
-        this.out.println();
-        this.out.print(">");
-    }
 
-    gameOver() : void {
-        this.isOn = false;
-        this.out.println("Thank you for playing.  Good bye.");
-        this.out.println("Hit F5 to restart the game");
-    }
 
-    /**
-     * Print out error message when user enters unknown command.
-     * Here we print some erro message and a list of the 
-     * command words.
-     * 
-     * @param params array containing all parameters
-     * @return true, if this command quits the game, false otherwise.
-     */
-    printError(params : string[]) : boolean {
-        this.out.println("I don't know what you mean...");
-        this.out.println();
-        this.out.println("Your command words are:");
-        this.out.println("   go quit help commands");
-        return false;
-    }
-   printLook(params : string[]) : boolean {
-        this.out.println(this.currentRoom.lookDescription);
-        this.out.println("You are " + this.currentRoom.description);
-        this.out.print("Exits: ");
-            if(this.currentRoom.northExit != null) {
-                this.out.print("north ");
-            }
-            if(this.currentRoom.eastExit != null) {
-                this.out.print("east ");
-            }
-            if(this.currentRoom.southExit != null) {
-                this.out.print("south ");
-            }
-            if(this.currentRoom.westExit != null) {
-                this.out.print("west ");
-            }
-        this.out.println();
-        return false;
-    }
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
-     * 
-     * @param params array containing all parameters
-     * @return true, if this command quits the game, false otherwise.
-     */
-    printHelp(params : string[]) : boolean {
-        if(params.length > 0) {
-            this.out.println("Help what?");
-            return false;
-        }
-        this.out.println("You are a maffia boss in a prison on the moon");
-        this.out.println("Hmmm... there must be a way to escape..");
-        this.out.println();
-        this.out.println("Try to type something, like 'go east' for example");
-        this.out.println("You can also quit.. but please play this game");
-        this.out.println("");
-        return false;
-    }
-    
-    // This prints out all the useful commands
-    
-    printCommands(params : string[]) : boolean {
-        if(params.length > 0) {
-            this.out.println("Just type 'commands' and press 'enter'");
-            return false;
-        }
-        this.out.println("Here are some useful commands:");
-        this.out.println("----------------------------------------");
-        this.out.println("-go (go south, go east, go west etc.)");
-        this.out.println("-help (if you need help)");
-        this.out.println("-quit (to quit the game, please dont do that.)");
-        this.out.println("-look (to view what you see.)");
-        this.out.println("-map (to see where you are.)");
-        this.out.println("");
-        return false;
-    }
-
-    // This shows the map with the current position
-    printMap(params : string[]) : boolean {
-        if(params.length > 0) {
-            this.out.println("Just type 'map' and press 'enter'");
-            return false;
-        }
-        this.out.println("You are now here:");
-        this.out.println("<img class='map' src='assets/map/" + this.currentRoom.mapDescription + ".gif'" );
-        this.out.print("Exits: ");
-            if(this.currentRoom.northExit != null) {
-                this.out.print("north ↑ ");
-            }
-            if(this.currentRoom.eastExit != null) {
-                this.out.print("east → ");
-            }
-            if(this.currentRoom.southExit != null) {
-                this.out.print("south ↓ ");
-            }
-            if(this.currentRoom.westExit != null) {
-                this.out.print("west ← ");
-            }
-        this.out.println("");
-        return false;
-    }
-    // Shows the player its current inventory
-    printInventory(params : string[]) : boolean {
-        if(params.length > 0) {
-            this.out.println("Just type 'inventory' and press 'enter'");
-            return false;
-        }
-        else if(this.inventory.length > 0) {
-        this.out.println("Your current inventory items are: ");
-        this.inventory.forEach(item => {
-            this.out.print("-" + item.description + " ");
-        });
-        this.out.println();
-        } else {
-        this.out.println("There are no items in your inventory.")
-        }
-        return false;
-    }
-    //inventory test
+    //This creates the default inventory:
     createInventory() : void {
         this.inventory.push(new Item("Money: Unlimited"));
     }
-
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     * 
-     * @param params array containing all parameters
-     * @return true, if this command quits the game, false otherwise.
-     */
-    goRoom(params : string[]) : boolean {
-        if(params.length == 0) {
-            // if there is no second word, we don't know where to go...
-            this.out.println("Go where?");
-            return;
-        }
-
-        let direction = params[0];
-
-        // Try to leave current room.
-        let nextRoom = null;
-        switch (direction) {
-            case "north" : 
-                nextRoom = this.currentRoom.northExit;
-                break;
-            case "east" : 
-                nextRoom = this.currentRoom.eastExit;
-                break;
-            case "south" : 
-                nextRoom = this.currentRoom.southExit;
-                break;
-            case "west" : 
-                nextRoom = this.currentRoom.westExit;
-                break;
-        }
-
-        if (nextRoom == null) {
-            this.out.println("There is no door!");
-        }
-        else {
-            this.currentRoom = nextRoom;
-            this.out.println("");
-            this.out.println("You are " + this.currentRoom.description);
-            this.out.println(this.currentRoom.actionDescription);
-            this.out.print("Exits: ");
-            if(this.currentRoom.northExit != null) {
-                this.out.print("north ");
-            }
-            if(this.currentRoom.eastExit != null) {
-                this.out.print("east ");
-            }
-            if(this.currentRoom.southExit != null) {
-                this.out.print("south ");
-            }
-            if(this.currentRoom.westExit != null) {
-                this.out.print("west ");
-            }
-            this.out.println();
-        }
-        return false;
-    }
-    
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * 
-     * @param params array containing all parameters
-     * @return true, if this command quits the game, false otherwise.
-     */
-    quit(params : string[]) : boolean {
-        if(params.length > 0) {
-            this.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
-    }
-        /**
+         /**
         * Create all the rooms and link their exits together.
         * Create a room described "description". Initially, it has
         * no exits. "description" is something like "a kitchen" or
@@ -434,7 +206,6 @@ class Game {
         administration.setExits(null, hall12, null, null);
         shuttle.setExits(null, null, hall14, null);
         nuclear.setExits(null, null, hall15, null);
-        
         
         // spawn player inside cell1
         this.currentRoom = cell1;

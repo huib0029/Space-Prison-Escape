@@ -13,6 +13,12 @@
 class Parser {
     input : HTMLInputElement;
     game : Game;
+    
+    // commandsinput goes to class Command and then executes string based on 
+    // the user input with 'public execute'
+    commandInput : { [key: string]: Command } ={};
+    basics : Basics;
+    
 
     /**
      * Creates the parser object.
@@ -23,6 +29,14 @@ class Parser {
     constructor(game: Game, input : HTMLInputElement) {
         this.game = game;
         this.input = input;
+        this.basics = new Basics(game);
+        this.commandInput["help"] = new Help(game);
+        this.commandInput["go"] = new Go(game);
+        this.commandInput["quit"] = new Quit(game);
+        this.commandInput["look"] = new Look(game);
+        this.commandInput["commands"] = new Commandslist(game);
+        this.commandInput["map"] = new Map(game);
+        this.commandInput["inventory"] = new Inventory(game);
         input.onkeyup = (e) => { // event handler function
             if (e.keyCode == 13 && this.game.isOn) {
                 // Invoke parse method wehen user pressed enter
@@ -44,39 +58,21 @@ class Parser {
     parse(words : string[]) : void {
         let wantToQuit = false;
         let params = words.slice(1);
-        switch (words[0]) {
-            case "" :
-                // Do nothing when user enters nothing 
-                break
-            case "help" : 
-                wantToQuit = this.game.printHelp(params);
-                break;
-            case "go" :
-                wantToQuit = this.game.goRoom(params);
-                break;
-            case "quit" : 
-                wantToQuit = this.game.quit(params);
-                break;
-            case "look" :
-                wantToQuit = this.game.printLook(params);
-                break;
-            case "commands" :
-                wantToQuit = this.game.printCommands(params);
-                break;
-            case "map" :
-                wantToQuit = this.game.printMap(params);
-                break;
-            case "inventory" :
-                wantToQuit = this.game.printInventory(params);
-                break;
-            default :
-                // print an error when command is not known
-                wantToQuit = this.game.printError(params);
-
+        if (words[0] == "") {  // Do nothing when user enters nothing 
+            return; }
+        // divines user input
+        let commandInput : Command;
+        commandInput = this.commandInput[words[0]];
+        // if theres no user input, run this.basics.printError(). this runs the printError
+        if ( commandInput == null)
+        {
+            wantToQuit = this.basics.printError(params);
         }
+        // else it executes the given command the user gives.
+        wantToQuit = commandInput.execute(params);
         if (wantToQuit) {
             this.input.disabled = true;
-            this.game.gameOver();
+            this.basics.gameOver();
         }
     }
 
