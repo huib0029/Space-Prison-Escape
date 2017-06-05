@@ -9,9 +9,7 @@
  */
 
 class Item {
-  name : string;
   description : string;
-  items : Array<Item> = [];
   
   constructor(description : string) {
     this.description = description;

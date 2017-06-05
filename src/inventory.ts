@@ -18,7 +18,7 @@ class Inventory extends Command {
         else if(this.game.inventory.length > 0) {
         this.game.out.println("Your current inventory items are: ");
         this.game.inventory.forEach(item => {
-            this.game.out.print("-" + item.description + " ");
+            this.game.out.println("-" + item.description + " ");
         });
         this.game.out.println();
         } else {

@@ -35,6 +35,7 @@ class Game {
     //This creates the default inventory:
     createInventory() : void {
         this.inventory.push(new Item("Money: Unlimited"));
+        this.inventory.push(new Item("Test"));
     }
          /**
         * Create all the rooms and link their exits together.
