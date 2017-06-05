@@ -11,13 +11,13 @@
  * @version 2017.03.30
  */
 class Parser {
-    input : HTMLInputElement;
-    game : Game;
+    private input : HTMLInputElement;
+    private game : Game;
     
     // commandsinput goes to class Command and then executes string based on 
     // the user input with 'public execute'
-    commandInput : { [key: string]: Command } ={};
-    basics : Basics;
+    private commandInput : { [key: string]: Command } ={};
+    private basics : Basics;
     
 
     /**
@@ -55,7 +55,7 @@ class Parser {
      * 
      * @param words an array of words to parse
      */
-    parse(words : string[]) : void {
+    private parse(words : string[]) : void {
         let wantToQuit = false;
         let params = words.slice(1);
         if (words[0] == "") {  // Do nothing when user enters nothing 

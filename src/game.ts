@@ -10,11 +10,11 @@
  * @version 2017.05.22
  */
 class Game {
-    parser: Parser;
+    private parser: Parser;
     out : Printer;
     inventory: Item[] = [];
     currentRoom : Room;
-    basics : Basics;
+    private basics : Basics;
 
     isOn : boolean;
 

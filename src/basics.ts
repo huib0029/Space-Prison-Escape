@@ -8,7 +8,7 @@
  * @version 2017.03.30
  */
 class Basics {
-    public game : Game;
+    private game : Game;
 
     constructor(game: Game){
       this.game = game;
@@ -22,7 +22,7 @@ class Basics {
      * @return true, if this command quits the game, false otherwise.
     */
     // prints error message.
-    public printError(params : string[]) : boolean {
+    printError(params : string[]) : boolean {
         this.game.out.println("I don't know what you mean...");
         this.game.out.println();
         this.game.out.println("Your command words are:");
@@ -30,7 +30,7 @@ class Basics {
         return false;
     }
     // When a user types 'quit', this will run:
-    public gameOver() : void {
+    gameOver() : void {
         this.game.isOn = false;
         this.game.out.println("Thank you for playing.  Good bye.");
         this.game.out.println("Hit F5 to restart the game");
