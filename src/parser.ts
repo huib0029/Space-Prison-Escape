@@ -63,7 +63,7 @@ class Parser {
         // divines user input
         let commandInput : Command;
         commandInput = this.commandInput[words[0]];
-        // if theres no user input, run this.basics.printError(). this runs the printError
+        // if command doesnt exist in user input, run this.basics.printError(). this runs the printError
         if ( commandInput == null)
         {
             wantToQuit = this.basics.printError(params);
