@@ -187,7 +187,8 @@ var Go = (function (_super) {
     }
     Go.prototype.execute = function (params) {
         if (params.length == 0) {
-            this.game.out.println("Go where?");
+            this.game.out.println("Just type 'go' followed by the direction and press 'enter'");
+            this.game.out.println("for example 'go west'");
             return;
         }
         var direction = params[0];
@@ -240,7 +241,7 @@ var Help = (function (_super) {
     }
     Help.prototype.execute = function (params) {
         if (params.length > 0) {
-            this.game.out.println("Help what?");
+            this.game.out.println("Just type 'help' and press 'enter'");
             return false;
         }
         this.game.out.println("You are a maffia boss in a prison on the moon");
@@ -290,6 +291,10 @@ var Look = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Look.prototype.execute = function (params) {
+        if (params.length > 0) {
+            this.game.out.println("Just type 'look' and press 'enter'");
+            return false;
+        }
         this.game.out.println(this.game.currentRoom.lookDescription);
         this.game.out.println("You are " + this.game.currentRoom.description);
         this.game.out.print("Exits: ");
@@ -408,7 +413,7 @@ var Quit = (function (_super) {
     }
     Quit.prototype.execute = function (params) {
         if (params.length > 0) {
-            this.game.out.println("Quit what?");
+            this.game.out.println("Just type 'quit' and press 'enter'");
             return false;
         }
         else {

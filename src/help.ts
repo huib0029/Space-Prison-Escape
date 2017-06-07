@@ -20,7 +20,7 @@ class Help extends Command {
      */
   public execute(params : string[]) : boolean {
         if(params.length > 0) {
-            this.game.out.println("Help what?");
+            this.game.out.println("Just type 'help' and press 'enter'");
             return false;
         }
         this.game.out.println("You are a maffia boss in a prison on the moon");

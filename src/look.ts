@@ -10,6 +10,10 @@
 
 class Look extends Command {
   public execute(params : string[]) : boolean { 
+        if(params.length > 0) {
+            this.game.out.println("Just type 'look' and press 'enter'");
+            return false;
+        }
         this.game.out.println(this.game.currentRoom.lookDescription);
         this.game.out.println("You are " + this.game.currentRoom.description);
         this.game.out.print("Exits: ");

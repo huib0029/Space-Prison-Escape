@@ -19,7 +19,7 @@ class Quit extends Command {
      * @return true, if this command quits the game, false otherwise.
      */
         if(params.length > 0) {
-            this.game.out.println("Quit what?");
+            this.game.out.println("Just type 'quit' and press 'enter'");
             return false;
         }
         else {

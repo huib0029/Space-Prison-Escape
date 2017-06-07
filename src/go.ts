@@ -19,7 +19,8 @@ class Go extends Command {
      */
         if(params.length == 0) {
             // if there is no second word, we don't know where to go...
-            this.game.out.println("Go where?");
+            this.game.out.println("Just type 'go' followed by the direction and press 'enter'");
+            this.game.out.println("for example 'go west'");
             return;
         }
 
